@@ -9,7 +9,6 @@ const instructions = input.map( line =>{
     return {direction,distance}
 
 })
-console.log(instructions)
 
 class Submarine{
     constructor(){
@@ -21,7 +20,8 @@ class Submarine{
         console.log("depth: ",this.y," x-coordinate: ",this.x)
     }
 
-    move({direction,distance}){
+    move(instruction){
+        const {direction,distance} = instruction
         switch(direction){
             case "forward":
                 this.x += distance
@@ -50,3 +50,36 @@ class Submarine{
 const sub = new Submarine
 
 sub.travel(instructions)
+
+
+class improvedSubmarine extends Submarine{
+    constructor(){
+        super()
+        this.aim = 0
+    }
+
+    print(){
+        console.log("depth: ",this.y," x-coordinate: ",this.x," aim: ",this.aim)
+    }
+    move(instruction){
+        const {direction,distance} = instruction
+        switch(direction){
+            case "forward":
+                this.x += distance
+                this.y += distance * this.aim
+                break
+            case "up":
+                this.aim -= distance
+                break
+            case "down":
+                this.aim += distance
+                break
+            default:
+                console.log(`unsure on this one: ${direction}`)
+        }
+    }
+}
+
+const newSub = new improvedSubmarine
+
+newSub.travel(instructions)
