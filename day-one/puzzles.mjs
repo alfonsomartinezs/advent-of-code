@@ -1,9 +1,12 @@
 import fs from 'fs';
+import { importArray } from '../helpers.mjs';
 
 
-const input = fs.readFileSync("input.txt",'utf8').split("\n").map(item => parseInt(item));
-const sample = fs.readFileSync("sample.txt",'utf8').split("\n").map(item => parseInt(item));
+// const input = fs.readFileSync("input.txt",'utf8').split("\n").map(item => parseInt(item));
 
+// const sample = fs.readFileSync("sample.txt",'utf8').split("\n").map(item => parseInt(item));
+const input = importArray("input.txt")
+const sample = importArray("sample.txt")
 const countIncreases = (array) =>{
     let increases = 0
     for (let i = 1; i < array.length; i++){
