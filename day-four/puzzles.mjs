@@ -37,7 +37,6 @@ const markBoard = (board,number) =>{
 }
 
 const isWinning = (board) =>{
-    //winning combinations are
     const winningCombos = 
     [
         //rows
@@ -87,23 +86,15 @@ const playBingo = (boards,numbers) =>{
 }
 
 const sumUnmarked = (board) =>{
-    // console.log("board tp be marked",board)
     return board.reduce((total, currentRow) =>{
-        // console.log("row: ",currentRow)
         const row = currentRow.reduce((rowTotal,currentItem) =>{
             return currentItem[1] === false ? rowTotal + currentItem[0] : rowTotal
         },0)
-        // console.log("total: ",total," row: ",row)
         return total + row
     },0)
 }
 
-const shallowCopyBoard = (board) =>{
-    const result = board.map (r =>{
-        r.slice()
-    })
-    console.log(board)
-}
+//part two
 
 const playSmartBingo = (boards,numbers) =>{
     const winners = []
@@ -128,12 +119,8 @@ const playSmartBingo = (boards,numbers) =>{
     } 
     return sumUnmarked(winners[winners.length-1].board,winners[winners.length-1]) * winners[winners.length-1].num
 }
-console.log("=============================================")
-console.log("=============================================")
-console.log("=============================================")
-console.log("=============================================")
-console.log("=============================================")
+
+
+//results
+console.log(playBingo(boards,numbers))
 console.log(playSmartBingo(boards,numbers))
-// console.log(boards[0])
-// console.log(boards[1])
-// console.log(boards[2])
