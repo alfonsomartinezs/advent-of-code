@@ -22,7 +22,7 @@ const getSegmentList = (fileLocation) =>{
     return {highestX,highestY,segments}
 }
 
-const {highestX,highestY,segments} = getSegmentList("sample.txt")
+const {highestX,highestY,segments} = getSegmentList("input.txt")
 
 
 //make diagram with highest x and y coordinates
@@ -49,8 +49,14 @@ const drawSegment = (diagram,segment) =>{
         }
     }else{
         console.log("segment ",segment," is diagonal. skipping...")
-        const slope = 
-        console.log("slope: ",slope)
+        const slope = (segment.b.y-segment.a.y)/(segment.b.x-segment.a.x)
+        const intercept = segment.a.y - (slope*segment.a.x)
+        for(let i = (segment.a.x > segment.b.x ? segment.b.x : segment.a.x); i <= (segment.a.x > segment.b.x ? segment.a.x : segment.b.x); i++){
+            const y = (i * slope) + intercept
+            diagram[y][i] += 1
+        }
+
+        
     }
 }
 
