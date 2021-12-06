@@ -1,4 +1,4 @@
-import { importArray } from "../helpers.mjs";
+import { importArray } from "../../helpers.mjs";
 
 const input = importArray("input.txt")
 const instructions = input.map( line =>{

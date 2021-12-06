@@ -59,16 +59,7 @@ const drawSegment = (diagram,segment) =>{
         
     }
 }
-
-const printDiagram = (diagram) =>{
-    for(const row of diagram){
-        console.log(row.join(""))
-    }
-}
-
-printDiagram(diagram)
 for(const segment of segments){
-    // console.log(segment)
     drawSegment(diagram,segment)
 }
 

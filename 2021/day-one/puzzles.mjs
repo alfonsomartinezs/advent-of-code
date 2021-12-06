@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { importArrayAsNumbers } from '../helpers.mjs';
+import { importArrayAsNumbers } from '../../helpers.mjs';
 
 
 // const input = fs.readFileSync("input.txt",'utf8').split("\n").map(item => parseInt(item));

@@ -1,4 +1,4 @@
-import { importArray } from "../helpers.mjs";
+import { importArray } from "../../helpers.mjs";
 
 
 const diagnosticReport = importArray("input.txt")
