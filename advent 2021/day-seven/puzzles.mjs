@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const crabPositions = fs.readFileSync("input.txt", 'utf8').split(",").map(p => parseInt(p))
+const crabPositions = fs.readFileSync("sample.txt", 'utf8').split(",").map(p => parseInt(p))
 
 
 //well, it's not the average.
@@ -21,32 +21,28 @@ const getArrayMedian = (array) =>{
 const targetPosition = getArrayMedian(crabPositions)
 
 const alignCrabs = (crabArray,targetPosition) =>{
-    const sortedCrabArray = crabArray.sort((a,b) => a-b)
-
-    let fuelTotal = 0
-
-    for(let i = 0 ; i < sortedCrabArray.length; i++){
-        fuelTotal += Math.abs(sortedCrabArray[i] - targetPosition)
-    }
-    return fuelTotal
+    return crabArray.reduce((fuelTotal, position) => { 
+        return fuelTotal += Math.abs(position - targetPosition)
+    },0)
 }
 
 console.log("fuel spent on original plan: ",alignCrabs(crabPositions,targetPosition))
 
+
+
+
 //part two
 
 const alignPartTwoCrabs = (crabArray,targetPosition) =>{
-    const sortedCrabArray = crabArray.sort((a,b) => a-b)
 
-    let fuelTotal = 0
-
-    for(let i = 0; i < sortedCrabArray.length; i++){
-        for(let j = 1; j <= Math.abs(sortedCrabArray[i]-targetPosition); j++){
-            fuelTotal += j
+    return crabArray.reduce((fuelTotal,position) => {
+        let fuelUsage = 0
+        for (let i = 1; i <= Math.abs(position-targetPosition); i++){
+            fuelUsage += i
         }
-    }
+        return fuelTotal + fuelUsage
+    },0)
 
-    return fuelTotal
 
 }
 
