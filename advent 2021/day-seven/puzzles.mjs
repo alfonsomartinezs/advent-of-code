@@ -3,19 +3,19 @@ import fs from 'fs';
 const crabPositions = fs.readFileSync("sample.txt", 'utf8').split(",").map(p => parseInt(p))
 
 
-//well, it's not the average.
 const getFuzzyArrayMean = (array) =>{
     let avg = array.reduce((runningAverage,currentNum) =>{
         return (runningAverage + currentNum)
     }) 
     return Math.round(avg/array.length)
 }
-//avg of sample is ~5, answer is 2.
 
-//let's try the median.
 const getArrayMedian = (array) =>{
     return array.sort((a,b) => a-b)[Math.floor(array.length/2)-1]
 }
+
+
+
 
 //part one
 const targetPosition = getArrayMedian(crabPositions)
@@ -45,12 +45,6 @@ const alignPartTwoCrabs = (crabArray,targetPosition) =>{
 
 
 }
-
-//this is what the prompt says we should get.
-// console.log(alignPartTwoCrabs(crabPositions,targetPosition))
-
-
-//the prompt also says the correct target positions should be 5. the mean is ~5...
 
 const partTwoTargetPosition = getFuzzyArrayMean(crabPositions)
 console.log("new position: ",partTwoTargetPosition)
