@@ -1,3 +1,4 @@
+console.log("====================")
 import { importArray } from "../../helpers.mjs"
 
 // const outputs = importArray("sample.txt").map(line => line.split("|")[1].trim().split(" "))
@@ -38,9 +39,16 @@ import { importArray } from "../../helpers.mjs"
 const lines = importArray("sample.txt").map(line => line.split("|"))
 
 const solvePuzzle = (lines) =>{
+    const outputArray = []
     for(const line of lines){
-        const signals = line[0].trim().split(" ").sort((a,b) => a.length - b.length)
-        const outputs = line[1].trim().split(" ")
+        const signals = line[0].trim().split(" ").sort((a,b) => a.length - b.length).map(signal =>{
+            const sortedSignal = signal.split("").sort().join("")
+            return sortedSignal
+        })
+        const outputs = line[1].trim().split(" ").map( signal =>{
+            const sortedSignal = signal.split("").sort().join("")
+            return sortedSignal
+        })
     
         const numberMap = {}
 
@@ -54,6 +62,50 @@ const solvePuzzle = (lines) =>{
         numberMap[four] = 4
         numberMap[eight] = 8
 
+        //signals are sorted by length, so we can tackle 2,3,5 (length 5)
+        //thought process here is to check if there are any segments in common between the known numbers and the length=5 numbers
+
+        //2 shares 2 segments with 7. 1 with 1. 1 with four. not sure there's enough there....
+        //3 shares 3 segments with 7. 2 with 1. 3 with four. promising...?
+        //5 shares 1 segment  with 7. 1 with 1. 3 with four.
+
+        //it might be easiest to find 3 first (most with both 7 and 1), 
+        // then 5 (most with 4 of the 2 remaining)
+        // then 2 is left:
+
+        //we know it's 3 if...
+        //it contains all of 7
+
+        //we know it's 5 if...
+        //it shares 3 segments with 4 and doesn't contain all of 7
+
+        //we know it's 2 if...
+        // it's not 3 or 5
+
+        for (let i = 0; i < 3; i++){
+            const signal = signals.shift()
+            const seven = Object.keys(numberMap)[1]
+            const four =  Object.keys(numberMap)[2]
+            if (signal.split("").filter(char => seven.includes(char)).length === 3){
+                console.log(signal," is 3")
+                numberMap[signal] = 3
+            }else if(signal.split("").filter(char => four.includes(char)).length === 3){
+                numberMap[signal] = 5
+            }else{
+                numberMap[signal] = 2
+            }
+        }
+
+
+
+        //then 6,9,0 (length 6)
+
+
+        //we know it's 6 if...
+
+        //we know it's 9 if...
+
+        //we know it's 0 if...
 
         console.log(signals)
         console.log(numberMap)
@@ -61,8 +113,10 @@ const solvePuzzle = (lines) =>{
     
     
     
-    
+    outputArray.push(parseInt(outputs.map( o => numberMap[o]).join("")))
     }
+
+    console.log("outputs: ",outputArray)
 }
 
 solvePuzzle(lines)
