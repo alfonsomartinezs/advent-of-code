@@ -36,7 +36,7 @@ import { importArray } from "../../helpers.mjs"
 //use map to get numbers from output
 
 
-const lines = importArray("sample.txt").map(line => line.split("|"))
+const lines = importArray("input.txt").map(line => line.split("|"))
 
 const solvePuzzle = (lines) =>{
     const outputArray = []
@@ -87,7 +87,6 @@ const solvePuzzle = (lines) =>{
             const seven = Object.keys(numberMap)[1]
             const four =  Object.keys(numberMap)[2]
             if (signal.split("").filter(char => seven.includes(char)).length === 3){
-                console.log(signal," is 3")
                 numberMap[signal] = 3
             }else if(signal.split("").filter(char => four.includes(char)).length === 3){
                 numberMap[signal] = 5
@@ -99,16 +98,37 @@ const solvePuzzle = (lines) =>{
 
 
         //then 6,9,0 (length 6)
+        //might be easier to find out what they don't share at this point.
 
+        //and....6 is the only one that doesn't share both 1 segments
+        // 9 contains all of 4
 
         //we know it's 6 if...
+        //if doesn't have both 2 segments
 
         //we know it's 9 if...
+        //it contains all of 4
 
         //we know it's 0 if...
+        //else stuff
 
-        console.log(signals)
-        console.log(numberMap)
+
+        for (let i = 0; i < 3; i++){
+            const signal = signals.shift()
+            const one = Object.keys(numberMap)[0]
+            const four =  Object.keys(numberMap)[2]
+            if (signal.split("").filter(char => one.includes(char)).length < 2){
+                numberMap[signal] = 6
+            }else if(signal.split("").filter(char => four.includes(char)).length === 4){
+                numberMap[signal] = 9
+            }else{
+                numberMap[signal] = 0
+            }
+        }
+
+
+        // console.log(signals)
+        // console.log(numberMap)
     
     
     
@@ -116,7 +136,15 @@ const solvePuzzle = (lines) =>{
     outputArray.push(parseInt(outputs.map( o => numberMap[o]).join("")))
     }
 
-    console.log("outputs: ",outputArray)
+    return outputArray
 }
 
 solvePuzzle(lines)
+
+const a = solvePuzzle(lines)
+
+const answer = a.reduce((total, num) =>{
+    return total + num
+})
+
+console.log(answer)
